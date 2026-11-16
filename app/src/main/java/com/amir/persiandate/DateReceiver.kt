@@ -7,6 +7,9 @@ import android.content.Intent
 class DateReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent?) {
         val prefs = context.getSharedPreferences("settings", Context.MODE_PRIVATE)
-        if (prefs.getBoolean("enabled", true)) DateNotifier.show(context)
+        if (prefs.getBoolean("enabled", true)) {
+            DateNotifier.show(context)
+            MainActivity.scheduleDailyUpdate(context)
+        }
     }
 }
