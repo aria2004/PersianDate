@@ -13,6 +13,7 @@ import android.view.Gravity
 import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
+import java.util.Calendar
 
 class MainActivity : Activity() {
     private val requestCode = 77
@@ -97,8 +98,15 @@ class MainActivity : Activity() {
                 context, 1, intent,
                 PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
             )
+            val nextMidnight = Calendar.getInstance().apply {
+                add(Calendar.DAY_OF_YEAR, 1)
+                set(Calendar.HOUR_OF_DAY, 0)
+                set(Calendar.MINUTE, 0)
+                set(Calendar.SECOND, 5)
+                set(Calendar.MILLISECOND, 0)
+            }.timeInMillis
             alarm.setInexactRepeating(
-                AlarmManager.RTC, System.currentTimeMillis() + 60_000L,
+                AlarmManager.RTC_WAKEUP, nextMidnight,
                 AlarmManager.INTERVAL_DAY, pending
             )
         }
